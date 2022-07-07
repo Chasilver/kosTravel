@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+          
+ <mapper namespace="gotrip.java.plan.dao.PlanDAO">
+	<insert id="planInsert" parameterType="planvo" >
+ 
+	INSERT INTO KOS_PLAN (	PNUM, MNUM, TNUM, 
+								PDAY, PLOCATION, PNAME,
+								PMEMO, INSERTDATE, UPDATEDATE)
+            			VALUES( #{pnum, jdbcType=VARCHAR}, 
+            					#{mnum, jdbcType=VARCHAR}, 
+            					#{tnum, jdbcType=VARCHAR}, 
+            					#{pday, jdbcType=VARCHAR}, 
+            					#{plocation, jdbcType=VARCHAR}, 
+            					#{pname, jdbcType=VARCHAR},             					
+            					#{pmemo, jdbcType=VARCHAR},      
+            					SYSDATE, 
+            					SYSDATE)
+	</insert>    
+	
+	<select id="chabunquery_plan" resultType="planvo">
+		SELECT /*+ INDEX_DESC(A SYS_C0012196) */ NVL(MAX(SUBSTR(A.PNUM, -4)), 0) + 1 PNUM FROM KOS_PLAN A
+	</select>
+	
+	<select id="planSelectAll" parameterType="planvo" resultType="planvo">	
+	
+		SELECT 	A.PNUM 			PNUM
+		       ,A.MNUM 			MNUM
+		       ,A.TNUM 			TNUM
+		       ,A.PDAY 			PDAY
+		       ,A.PLOCATION 	PLOCATION
+		       ,A.PNAME 		PNAME		   
+		       ,A.PMEMO 		PMEMO
+		       ,TO_CHAR(A.INSERTDATE, 'YYYY-MM-DD') INSERTDATE
+		       ,TO_CHAR(A.UPDATEDATE, 'YYYY-MM-DD') UPDATEDATE	       
+		FROM 	KOS_PLAN A
+		WHERE 	MNUM = #{mnum, jdbcType=VARCHAR}
+		AND		TNUM = #{tnum, jdbcType=VARCHAR}
+		ORDER BY 1 ASC  		
+	</select>
+	<select id="plocationSelect" parameterType="planvo" resultType="planvo">	
+	
+		SELECT 	A.PLOCATION 	PLOCATION    
+		FROM 	KOS_PLAN A
+		WHERE 	MNUM = #{mnum, jdbcType=VARCHAR}
+		AND 	PDAY = #{pday, jdbcType=VARCHAR}
+		AND 	TNUM = #{tnum, jdbcType=VARCHAR}
+		ORDER BY 1 ASC  		
+	</select>
+	<delete id="planDelete" parameterType="planvo">
+		DELETE FROM KOS_PLAN
+		WHERE PNUM = #{pnum, jdbcType=VARCHAR}
+		
+	</delete>
+	<select id="planSelect" parameterType="planvo" resultType="planvo">
+		SELECT 	MAX(PDAY)		MAXDAY
+		FROM	KOS_PLAN
+		WHERE 	MNUM = #{mnum, jdbcType=VARCHAR}
+		AND		TNUM = #{tnum, jdbcType=VARCHAR}
+	</select>
+</mapper>	           

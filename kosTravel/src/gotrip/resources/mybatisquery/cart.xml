@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+          
+ <mapper namespace="gotrip.java.cart.dao.CartDAO">
+ 
+ 	<select id="cartSelect" parameterType="cartvo" resultType="cartvo">
+		SELECT 	 A.KCNUM			KCNUM
+				,A.MNUM				MNUM
+				,A.FNUM				FNUM
+				,TO_CHAR(A.FSTARTDAY, 'YYYY-MM-DD')		FSTARTDAY
+				,TO_CHAR(A.FDETDAY, 'YYYY-MM-DD')		FDETDAY
+				,A.FNAME 			FNAME
+				,A.FSTART			FSTART
+				,A.FDEST			FDEST
+				,A.FSTARTTIME		FSTARTTIME
+				,A.FDETTIME			FDETTIME
+				,A.FPRICE			FPRICE
+				,A.HNUM				HNUM
+				,A.HNAME			HNAME
+				,A.HKIND			HKIND
+				,A.HPRICE			HPRICE
+				,A.HPHONE			HPHONE
+				,A.HADDR			HADDR
+				,TO_CHAR(A.HCHECKIN, 'YYYY-MM-DD')		HCHECKIN
+				,TO_CHAR(A.HCHECKOUT, 'YYYY-MM-DD')		HCHECKOUT
+				,A.CARNUM			CARNUM
+				,A.CARNAME			CARNAME
+				,A.CARADDR			CARADDR
+				,A.CARPRICE			CARPRICE
+				,A.CARPHONE			CARPHONE
+				,TO_CHAR(A.CARSTARTDAY, 'YYYY-MM-DD')	CARSTARTDAY
+				,TO_CHAR(A.CARENDDAY, 'YYYY-MM-DD')		CARENDDAY
+		FROM	KOS_CART A
+		WHERE	MNUM = #{mnum, jdbcType=VARCHAR}
+		
+	</select>
+ </mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+          
+ <mapper namespace="gotrip.java.travel.dao.TravelDAO">
+	<insert id="travelInsert" parameterType="travelvo" >
+ 
+	INSERT INTO KOS_TRAVEL (	TNUM, MNUM, TNAME, TSTARTDATE, 
+								TENDDATE)
+            			VALUES( #{tnum, jdbcType=VARCHAR}, 
+            					#{mnum, jdbcType=VARCHAR}, 
+            					#{tname, jdbcType=VARCHAR}, 
+            					#{tstartdate, jdbcType=VARCHAR}, 
+            					#{tenddate, jdbcType=VARCHAR})
+	</insert>    
+	
+	<select id="chabunquery_travel" resultType="travelvo">
+		SELECT /*+ INDEX_DESC(A SYS_C0012186) */ NVL(MAX(SUBSTR(A.TNUM, -4)), 0) + 1 TNUM FROM KOS_TRAVEL A
+	</select>
+	
+	<select id="travelSelectAll" parameterType="travelvo" resultType="travelvo">	
+	
+		SELECT 	A.TNUM 			TNUM
+		       ,A.MNUM 			MNUM
+		       ,A.TNAME 		TNAME
+		       ,TO_CHAR(A.TSTARTDATE, 'YYYY-MM-DD') TSTARTDATE
+		       ,TO_CHAR(A.TENDDATE, 'YYYY-MM-DD') TENDDATE	       
+		FROM 	KOS_TRAVEL A
+		WHERE 	MNUM = #{mnum, jdbcType=VARCHAR}
+		ORDER BY 1 ASC  		
+	</select>
+	
+	<select id="travelSelect" parameterType="travelvo" resultType="travelvo">	
+	
+		SELECT 	TO_CHAR(A.TSTARTDATE, 'YYYY-MM-DD') TSTARTDATE
+		       ,TO_CHAR(A.TENDDATE, 'YYYY-MM-DD') TENDDATE	       
+		FROM 	KOS_TRAVEL A
+		WHERE 	TNUM = #{tnum, jdbcType=VARCHAR}	
+	</select>
+</mapper>	           

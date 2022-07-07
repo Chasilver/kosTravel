@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+		  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+		  
+<configuration>
+	<typeAliases>
+		<typeAlias type="gotrip.java.plan.vo.PlanVO" alias="planvo"/>
+		<typeAlias type="gotrip.java.travel.vo.TravelVO" alias="travelvo"/>
+		<typeAlias type="gotrip.java.cart.vo.CartVO" alias="cartvo"/>
+	</typeAliases>
+</configuration>	
